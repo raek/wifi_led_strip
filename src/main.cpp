@@ -18,7 +18,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(ledCount, ledPin, ledMode);
 const char *wifiSsid = "IntranetOfThings";
 const char *wifiPass = "hunter2";
 
-WiFiServer server(80);
+const int serverPort = 80;
+WiFiServer server(serverPort);
 
 void setup()
 {
@@ -26,13 +27,22 @@ void setup()
     strip.begin();
     strip.setPixelColor(0, 255, 0, 0);
     strip.show();
+    Serial.print("Connecting to ");
+    Serial.println(wifiSsid);
     WiFi.begin(wifiSsid, wifiPass);
     while (WiFi.status() != WL_CONNECTED) {
         delay(100);
+        Serial.print(".");
     }
+    Serial.println("");
     strip.setPixelColor(0, 0, 255, 0);
     strip.show();
+    Serial.println("Connected");
     server.begin();
+    Serial.println("Listening to ");
+    Serial.print(WiFi.localIP());
+    Serial.print(":");
+    Serial.println(serverPort);
     delay(500);
     strip.setPixelColor(0, 0, 0, 0);
     strip.show();
