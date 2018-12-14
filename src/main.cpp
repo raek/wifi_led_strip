@@ -27,6 +27,8 @@ void setup()
     strip.begin();
     strip.setPixelColor(0, 255, 0, 0);
     strip.show();
+    Serial.print("MAC: ");
+    Serial.println(WiFi.macAddress());
     Serial.print("Connecting to ");
     Serial.println(wifiSsid);
     WiFi.begin(wifiSsid, wifiPass);
